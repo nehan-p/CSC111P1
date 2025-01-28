@@ -61,11 +61,12 @@ class EventList:
     A linked list of game events.
 
     Instance Attributes:
-        - first: The first event in the event list, or None if the list is empty
-        - last: The last event in the event list, or None if the list is empty
+        - first: The first event that takes place in the game
+        - last: The last event that takes place in the game
 
     Representation Invariants:
-        - If first is None, then last must also be None (i.e., the list is empty)
+        - self.first.prev == None
+        - self.last.next == None
     """
     first: Optional[Event]
     last: Optional[Event]
@@ -83,8 +84,6 @@ class EventList:
             print(f"Location: {curr.id_num}, Command: {curr.next_command}")
             curr = curr.next
 
-    # TODO: Complete the methods below, based on the given descriptions. Do NOT change any of their specification.
-    #  That is, the function headers (parameters, return type, etc.) must NOT be changed.
     def is_empty(self) -> bool:
         """Return whether this event list is empty."""
 
@@ -96,21 +95,16 @@ class EventList:
         event in the game.
         """
         # Hint: You should update the previous node's <next_command> as needed
-
         if self.is_empty():
-            # If the list is empty, set both first and last to the new event
             self.first = event
             self.last = event
-            event.prev = None
             event.next = None
-            event.next_command = command
+
         else:
-            # Link the current last event to the new event
             self.last.next = event
-            event.prev = self.last
-            self.last.next_command = command
             self.last = event
             event.next = None
+            self.last.prev.next_command = command
 
     def remove_last_event(self) -> None:
         """Remove the last event from this event list.
@@ -118,38 +112,31 @@ class EventList:
 
         # Hint: The <next_command> and <next> attributes for the new last event should be updated as needed
 
-        if self.first is None:
+        if self.is_empty():
             return
         elif self.first == self.last:
             self.first = None
             self.last = None
         else:
-            new_last = self.last.prev
-            new_last.next = None
-            new_last.next_command = None
-            self.last = new_last
-
+            self.last.prev.next, self.last = None, self.last.prev
+            self.last.next_command = None
 
     def get_id_log(self) -> list[int]:
         """Return a list of all location IDs visited for each event in this list, in sequence."""
 
-        ids = []
+        list_of_ids = []
         curr = self.first
-        while curr:
-            ids.append(curr.id_num)
+        while curr is not None:
+            list_of_ids.append(curr.id_num)
             curr = curr.next
-        return ids
+        return list_of_ids
 
     # Note: You may add other methods to this class as needed but DO NOT CHANGE THE SPECIFICATION OF ANY OF THE ABOVE
 
 
 if __name__ == "__main__":
-    pass
-    # When you are ready to check your work with python_ta, uncomment the following lines.
-    # (Delete the "#" and space before each line.)
-    # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120,
+        'disable': ['R1705', 'E9998', 'E9999']
+    })
