@@ -1,0 +1,85 @@
+{
+  "locations": [
+    {
+      "id": 1,
+      "name": "Bahen 1F",
+      "brief_description": "You are on the first floor of the Bahen Center. There are elevators to the West, and an exit from the building to St. George street to the East. You see something shiny on the ground -- looks like a toonie?",
+      "long_description": "You are on the first floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. You better not disturb them. One student is rushing down the corridor, wearing a heavy-looking backpack and carrying a textbook in their arms. There are elevators to the West, and an exit from the building to St. George street to the East.",
+      "available_commands": {
+        "go south": 4,
+        "go east": 2
+      },
+      "items": ["toonie"]
+    },
+    {
+      "id": 2,
+      "name": "Gerstein Library",
+      "brief_description": "You are in the Gerstein Science Library. It's quiet, and students are buried in their books.",
+      "long_description": "You step into the Gerstein Science Library. Rows of bookshelves tower over the study desks, where students are hunched over their laptops. The faint sound of keyboard typing fills the air.",
+      "available_commands": {
+        "go west": 1
+      },
+      "items": ["USB Drive"]
+    },
+    {
+      "id": 3,
+      "name": "Campus Cafe",
+      "brief_description": "You're at the Campus Cafe, where students grab their coffee before heading to class.",
+      "long_description": "You enter the Campus Cafe. The smell of freshly brewed coffee fills the air. Students are lined up, waiting for their orders, while others are sitting at tables, sipping on their drinks.",
+      "available_commands": {
+        "go south": 5
+      },
+      "items": ["Lucky Mug"]
+    },
+    {
+      "id": 4,
+      "name": "South Hallway",
+      "brief_description": "You are in a quiet hallway with classrooms around.",
+      "long_description": "You are in a hallway connecting different parts of the Bahen Center. The air smells like coffee and whiteboard markers. There are doors leading to classrooms, and a vending machine at the end of the hall.",
+      "available_commands": {
+        "go north": 1
+      },
+      "items": []
+    },
+    {
+      "id": 5,
+      "name": "Your Dorm Room",
+      "brief_description": "You are in your dorm room, the final destination for your project submission.",
+      "long_description": "You step into your dorm room. Your desk is cluttered with notes, your laptop is open, and the deadline looms over you. All you need are your missing items to finish the submission.",
+      "available_commands": {
+        "go north": 3
+      },
+      "items": []
+    }
+  ],
+  "items": [
+    {
+      "name": "toonie",
+      "description": "There is a toonie on the ground. Someone must have dropped it.",
+      "start_position": 1,
+      "target_position": 4,
+      "target_points": 5
+    },
+    {
+      "name": "USB Drive",
+      "description": "A small USB Drive containing all your project files. You need this to submit your work!",
+      "start_position": 2,
+      "target_position": 5,
+      "target_points": 10
+    },
+    {
+      "name": "Laptop Charger",
+      "description": "Your laptop charger. Without it, your laptop will die before you can submit.",
+      "start_position": 4,
+      "target_position": 5,
+      "target_points": 10
+    },
+    {
+      "name": "Lucky Mug",
+      "description": "Your lucky UofT mug. You can't submit your project without it!",
+      "start_position": 3,
+      "target_position": 5,
+      "target_points": 10
+    }
+  ]
+}
