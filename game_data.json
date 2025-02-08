@@ -2,84 +2,145 @@
   "locations": [
     {
       "id": 1,
-      "name": "Bahen 1F",
-      "brief_description": "You are on the first floor of the Bahen Center. There are elevators to the West, and an exit from the building to St. George street to the East. You see something shiny on the ground -- looks like a toonie?",
-      "long_description": "You are on the first floor of the Bahen Center. It's usually crowded at this time of the day, but today it's eerily quiet. Only a few students are studying at the table near the doors. You better not disturb them. One student is rushing down the corridor, wearing a heavy-looking backpack and carrying a textbook in their arms. There are elevators to the West, and an exit from the building to St. George street to the East.",
+      "name": "Bahen Center for Information Technology",
+      "brief_description": "You are on the first floor of the Bahen Center for Information Technology. There is an exit from the building to St. George Street to the east. A lost engineering calculator lies on the ground, and you spot a UofT mug on a table.",
+      "long_description": "You are on the first floor of the Bahen Center for Information Technology, a popular student hub. There is an exit leading to St. George Street to the east. As you look around, you notice a university-issued engineering calculator on the ground—someone must have dropped it. Nearby, a familiar blue UofT mug sits abandoned on a table.",
       "available_commands": {
-        "go south": 4,
         "go east": 2
       },
-      "items": ["toonie"]
+      "items": ["engineering calculator", "uoft mug"]
     },
     {
       "id": 2,
-      "name": "Gerstein Library",
-      "brief_description": "You are in the Gerstein Science Library. It's quiet, and students are buried in their books.",
-      "long_description": "You step into the Gerstein Science Library. Rows of bookshelves tower over the study desks, where students are hunched over their laptops. The faint sound of keyboard typing fills the air.",
+      "name": "St. George St",
+      "brief_description": "You are standing on St. George Street, right outside of Bahen. To the west is the entrance to Bahen, to the east is the Myhal Centre, to the south is Wallberg Memorial, and to the north, a quiet walkway leads toward the dorms.",
+      "long_description": "You are standing on St. George Street, right outside of the Bahen Center. The cool breeze of downtown Toronto brushes against you. The street is bustling with students going in and out of various buildings. The entrance to Bahen is to the west, while the Myhal Centre is just ahead to the east. To the south, you can see the Wallberg Memorial Building, and further north, a walkway leads toward the dorms.",
       "available_commands": {
-        "go west": 1
+        "go west": 1,
+        "go east": 4,
+        "go south": 6,
+        "go north": 7
       },
-      "items": ["USB Drive"]
+      "items": []
     },
     {
       "id": 3,
-      "name": "Campus Cafe",
-      "brief_description": "You're at the Campus Cafe, where students grab their coffee before heading to class.",
-      "long_description": "You enter the Campus Cafe. The smell of freshly brewed coffee fills the air. Students are lined up, waiting for their orders, while others are sitting at tables, sipping on their drinks.",
+      "name": "Robarts Library",
+      "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the east and a locked study room is nearby.",
+      "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the east and a locked study room is nearby with a keypad entry.",
       "available_commands": {
-        "go south": 5
+        "go east": 2,
+        "enter study room": 8
       },
-      "items": ["Lucky Mug"]
+      "items": []
     },
     {
       "id": 4,
-      "name": "South Hallway",
-      "brief_description": "You are in a quiet hallway with classrooms around.",
-      "long_description": "You are in a hallway connecting different parts of the Bahen Center. The air smells like coffee and whiteboard markers. There are doors leading to classrooms, and a vending machine at the end of the hall.",
+      "name": "Myhal Basement",
+      "brief_description": "You are in the basement of the Myhal Centre for Engineering Innovation. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is nearby.",
+      "long_description": "You find yourself in the basement of the Myhal Centre for Engineering Innovation and Entrepreneurship, a more modern study space. The computer labs are nearly full, and the hum of laptop fans fills the air. The wooden finish and sleek furniture give the space a high-tech feel. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is nearby.",
       "available_commands": {
-        "go north": 1
-      },
+      "go east": 5,
+      "go west": 2,
+      "enter computer lab": 9
+    },
       "items": []
     },
     {
       "id": 5,
-      "name": "Your Dorm Room",
-      "brief_description": "You are in your dorm room, the final destination for your project submission.",
-      "long_description": "You step into your dorm room. Your desk is cluttered with notes, your laptop is open, and the deadline looms over you. All you need are your missing items to finish the submission.",
+      "name": "Front Campus",
+      "brief_description": "You are at Front Campus, surrounded by historic buildings and a massive open lawn. The dorms are to the north, and Wallberg Memorial Building is to the south.",
+      "long_description": "You are at Front Campus, a scenic open lawn surrounded by historic UofT buildings. Students are lying on the grass, enjoying the sun, while a group of tourists takes photos of University College. The atmosphere is peaceful, with only the occasional laughter or distant chatter. You spot a UofT mug on a nearby bench. Someone must have left it behind. The dorms are just beyond the trees to the north, while the Wallberg Memorial Building is further down to the south.",
       "available_commands": {
-        "go north": 3
+        "go north": 3,
+        "go south": 6
       },
       "items": []
-    }
+    },
+    {
+      "id": 6,
+      "name": "Wallberg Memorial Building",
+      "brief_description": "You are in the Wallberg Memorial Building, where your engineering lectures take place. Front Campus is to the north, and St. George Street is to the west. A lost student card and an old notebook are lying on a desk.",
+      "long_description": "You are in the Wallberg Memorial Building, a familiar place for engineering and computer science students. A lecture is currently in progress in one of the large halls. The professor is animatedly explaining a complex formula on the board, while a few students whisper to each other, trying to decipher their notes. Others have resigned themselves to zoning out, their eyes drifting toward the clock, counting down the minutes until the lecture ends. On a nearby desk, you notice a student card belonging to someone named Joey. Beside it, an old, worn-out notebook filled with cryptic equations and lecture notes lies abandoned.",
+      "available_commands": {
+        "go north": 5,
+        "go west": 2
+      },
+      "items": ["lost student card", "old notebook"]
+    },
+    {
+      "id": 7,
+      "name": "Your Dorm",
+      "brief_description": "You are in your dorm room, your own little corner of campus. There's an exist to the east that leads to St. George Street.",
+      "long_description": "You are in your dorm room, a small but cozy space cluttered with textbooks, empty coffee cups, and a few too many unfinished assignments. Your desk is a chaotic mix of open notebooks and tangled charger cables. The bed is unmade, and your laundry situation is starting to get out of control. Despite the mess, it feels like home. There's an exist to the east that leads to St. George Street",
+      "available_commands": {
+        "go east": 2
+      },
+      "items": []
+    },
+    {
+      "id": 8,
+      "name": "Robarts Study Room",
+      "brief_description": "A private study room with your laptop charger on the table. You enter with the student card you picked up",
+      "long_description": "You use the student card you found to enter the study room contains your missing laptop charger!",
+      "available_commands": {
+        "exit": 3
+      },
+      "items": ["laptop charger"]
+    },
+    {
+    "id": 9,
+    "name": "Myhal Computer Lab",
+    "brief_description": "A secure computer lab with your USB drive visible in a workstation.",
+    "long_description": "Rows of powerful computers hum quietly in this restricted lab. You spot your USB drive plugged into one of the workstations!",
+    "available_commands": {
+      "exit": 4
+    },
+    "items": ["usb drive"]
+  }
   ],
   "items": [
     {
-      "name": "toonie",
-      "description": "There is a toonie on the ground. Someone must have dropped it.",
+      "name": "engineering calculator",
+      "description": "A high-end engineering calculator, probably left behind by a stressed-out student. It should be returned to the Myhal Basement where engineering students study.",
       "start_position": 1,
       "target_position": 4,
       "target_points": 5
     },
     {
-      "name": "USB Drive",
-      "description": "A small USB Drive containing all your project files. You need this to submit your work!",
-      "start_position": 2,
-      "target_position": 5,
+      "name": "lost student card",
+      "description": "A student card belonging to someone named Joey. It should probably be returned to Lost & Found in Robarts Library.",
+      "start_position": 6,
+      "target_position": 3,
+      "target_points": 7
+    },
+    {
+    "name": "usb drive",
+    "description": "Your USB drive! You can’t believe you found it. The only copy of your game—safe at last. You make a mental note to back it up the second you get back to your dorm. No more near-heart attacks.",
+    "start_position": 9,
+    "target_position": 7,
+    "target_points": 10
+    },
+    {
+      "name": "laptop charger",
+      "description": "Your laptop charger! You were sure it was gone forever, but here it is. No more frantic battery-saving mode. You're back in business!",
+      "start_position": 8,
+      "target_position": 7,
       "target_points": 10
     },
     {
-      "name": "Laptop Charger",
-      "description": "Your laptop charger. Without it, your laptop will die before you can submit.",
-      "start_position": 4,
-      "target_position": 5,
+      "name": "uoft mug",
+      "description": "Your lucky UofT mug! You were starting to accept that it was lost to the universe, but here it is in the library where you must've left it last night. Crisis averted.",
+      "start_position": 1,
+      "target_position": 7,
       "target_points": 10
     },
     {
-      "name": "Lucky Mug",
-      "description": "Your lucky UofT mug. You can't submit your project without it!",
-      "start_position": 3,
-      "target_position": 5,
-      "target_points": 10
+      "name": "old notebook",
+      "description": "A worn-out notebook filled with cryptic equations and lecture notes. Someone must have abandoned it. You should leave it in the lecture hall in case they come back for it. As you glance at the pages, you notice some hastily scribbled notes in the margins. It looks like a sequence of numbers…",
+      "start_position": 6,
+      "target_position": 6,
+      "target_points": 6
     }
   ]
 }

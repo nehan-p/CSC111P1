@@ -75,7 +75,7 @@ class AdventureGame:
         self.ongoing = True  # whether the game is ongoing
         self.inventory = []  # Initialize an empty inventory
         self.score = 0 # starting score of 0
-        self.remaining_moves = 5
+        self.remaining_moves = 45
 
     @staticmethod
     def _load_game_data(filename: str) -> tuple[dict[int, Location], list[Item]]:
@@ -98,6 +98,7 @@ class AdventureGame:
         for item_data in data['items']:
             item_obj = Item(
                 name=item_data['name'],
+                description=item_data['description'],
                 start_position=item_data['start_position'],
                 target_position=item_data['target_position'],
                 target_points=item_data['target_points']
@@ -120,22 +121,31 @@ class AdventureGame:
         # Retrieve and return the Location object
         return self._locations[loc_id]
 
+    def get_item_by_name(self, item_name: str) -> Optional[Item]:
+        """Return the Item object with the given name, or None if not found."""
+        return next((item for item in self._items if item.name == item_name), None)
+
     def pick_up_item(self, item_name: str) -> None:
         """Pick up an item if it's at the current location."""
         current_location = self.get_location()
 
         if item_name in current_location.items:
-            self.inventory.append(item_name)  # Add to inventory
-            current_location.items.remove(item_name)  # Remove from location
+            # Proceed to pick up the item (removed riddle check)
+            self.inventory.append(item_name)
+            current_location.items.remove(item_name)
+
+            item = next((i for i in self._items if i.name == item_name), None)
+            if item:
+                print(f"{item.description}")
+
             print(f"You picked up {item_name}!")
 
+            # Update location descriptions
             current_location.brief_description = current_location.brief_description.replace(f" {item_name}", "")
             current_location.long_description = current_location.long_description.replace(f" {item_name}", "")
 
-            # Add points for picking up the item
-            item = next((i for i in self._items if i.name == item_name), None)
-            if item and item.target_points:
-                self.score += item.target_points
+            if item_name == "old notebook":
+                print("You can now read the old notebook by typing 'read old notebook'.")
 
         else:
             print("There's no such item here.")
@@ -143,17 +153,23 @@ class AdventureGame:
     def drop_item(self, item_name: str) -> None:
         """Drop an item from inventory and place it back in the current location."""
         if item_name in self.inventory:
+            if item_name == "lost student card" and not has_used_student_card:
+                print("Hmmm... maybe you should hang on to the student card for a minute before dropping it off at Lost & Found, in case you need it to access something in the library and considering you left yours at your parents' house.")
+                return
             self.inventory.remove(item_name)  # Remove from inventory
-            self.get_location().items.append(item_name)  # Place item at current location
+            current_location = self.get_location()
+            current_location.items.append(item_name)  # Place item at current location
             print(f"You dropped {item_name}.")
 
-            self.get_location().brief_description += f" {item_name}"
-            self.get_location().long_description += f" {item_name}"
+            current_location.brief_description += f" {item_name}"
+            current_location.long_description += f" {item_name}"
 
-            # Deduct points for dropping the item
+            # Check if the item is in its target position and add points
             item = next((i for i in self._items if i.name == item_name), None)
-            if item and item.target_points:
-                self.score -= item.target_points
+            if item and current_location.id_num == item.target_position:
+                self.score += item.target_points
+                print(f"You placed {item_name} in the correct location! +{item.target_points} points.")
+
         else:
             print("You don't have that item to drop.")
 
@@ -167,8 +183,17 @@ class AdventureGame:
         print(f"Remaining moves: {self.remaining_moves}")
 
         if self.remaining_moves <= 0:
-            print("You've run out of moves! Game over.")
+            print("It's 4 PM! The project deadline has passed, and you didn’t find all your items in time. You scramble to submit, but it's too late... You have failed to meet the deadline.")
             self.ongoing = False
+
+    def check_win_condition(self) -> None:
+        """Check if the player has won the game."""
+
+        # Check if the player is in their dorm and has all the required items
+        if (self.current_location_id == 7 and "usb drive" in self.inventory and "uoft mug" in self.inventory and "laptop charger" in self.inventory):
+            print("Your laptop is charging, your game is backed up, and your lucky mug is right where it belongs.")
+            print("With everything set, you're ready to finish your project and submit it on time. Well done!")
+            self.ongoing = False  # End the game
 
 
 if __name__ == "__main__":
@@ -183,9 +208,12 @@ if __name__ == "__main__":
     # })
 
     game_log = EventList()  # This is REQUIRED as one of the baseline requirements
-    game = AdventureGame('game_data.json', 1)  # load data, setting initial location ID to 1
+    game = AdventureGame('game_data.json', 7)  # load data, setting initial location ID to 1
     menu = ["look", "inventory", "score", "undo", "log", "quit"]  # Regular menu options available at each location
     choice = None
+    in_look = False
+    has_used_student_card = False  # Track if the lost student card has been used
+    has_lab_code = False
 
     # Note: You may modify the code below as needed; the following starter code is just a suggestion
     while game.ongoing:
@@ -218,10 +246,11 @@ if __name__ == "__main__":
         # TODO: Depending on whether or not it's been visited before,
         #  print either full description (first time visit) or brief description (every subsequent visit) of location
         # YOUR CODE HERE
-        if not location.visited:
+        if not location.visited or in_look:
             print(location.long_description)
             location.visited = True
-        else:
+            in_look = False
+        elif not in_look:
             print(location.brief_description)
 
         # Display possible actions at this location
@@ -237,7 +266,8 @@ if __name__ == "__main__":
         while (choice not in location.available_commands
                and choice not in menu
                and not choice.startswith("pick up ")
-               and not choice.startswith("drop ")):
+               and not choice.startswith("drop ")
+               and not choice.startswith("read ")):
             print("That was an invalid option; try again.")
             choice = input("\nEnter action: ").lower().strip()
 
@@ -251,6 +281,7 @@ if __name__ == "__main__":
         if choice in menu:
             # TODO: Handle each menu command as appropriate
             # Note: For the "undo" command, remember to manipulate the game_log event list to keep it up-to-date
+            # Handle study room access check
             if choice == "log":
                 game_log.display_events()
             # ENTER YOUR CODE BELOW to handle other menu commands (remember to use helper functions as appropriate)
@@ -262,7 +293,7 @@ if __name__ == "__main__":
 
             elif choice == "look":
                 print("You take a moment to look around...")
-                print(location.long_description if not location.visited else location.brief_description)
+                in_look = True
 
 
             elif choice == "score":
@@ -315,10 +346,55 @@ if __name__ == "__main__":
             item_name = choice[len("drop "):]  # Extract item name
             game.drop_item(item_name)
 
+        elif choice.startswith("read "):
+            item_name = choice[len("read "):]
+            if item_name in game.inventory:
+                if item_name == "old notebook":
+                    print("You flip through the notebook...")
+                    print("Pages of differential equations and lecture notes...")
+                    print("On the top-left of page 42: '3842 - remember to submit assignment!'")
+                    print("Hmm, those four digits look important. Better make note of them!")
+                    has_lab_code = True
+                else:
+                    item = game.get_item_by_name(item_name)
+                    if item:
+                        print(f"You examine {item_name}: {item.description}")
+            else:
+                print(f"You don't have {item_name} to read.")
+
         else:
             # Handle non-menu actions
+            if choice == "enter study room":
+                if game.get_location().id_num == 3:  # Check if the player is at Robarts Library
+                    if "lost student card" in game.inventory:
+                        print("You tap the lost student card on the reader. The door clicks open, and you step inside.")
+                        game.current_location_id = 8  # Move player to Study Room
+                        has_used_student_card = True  # Mark the card as used
+                    else:
+                        print("The door is locked with a card reader.")
+                        print("A sign says: 'UofT students only - tap student card to enter'")
+                        print("Maybe you can find a student card somewhere on campus?")
+
+            elif choice == "enter computer lab":
+                if game.get_location().id_num == 4:  # Check if in Myhal Basement
+                    if not has_lab_code:
+                        print("The lab door has a keypad. A sign says: 'Enter 4-digit code:'")
+                        print("You need an access code! Maybe theres a code written on a notebook somewhere...?")
+                        continue
+                    else:
+                        attempt = input("Enter 4-digit code: ").strip()
+                        if attempt == "3842":
+                            game.current_location_id = 9  # Computer Lab's ID
+                            print("Access granted! The door clicks open.")
+                        else:
+                            print("Incorrect code! The keypad flashes red.")
+                            game.deduct_move()
+                            continue
+
+
             result = location.available_commands[choice]
             game.current_location_id = result
+            game.check_win_condition()
 
             # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
             # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game
