@@ -139,8 +139,8 @@
       "name": "old notebook",
       "description": "A worn-out notebook filled with cryptic equations and lecture notes. Someone must have abandoned it. You should leave it in the lecture hall in case they come back for it. As you glance at the pages, you notice some hastily scribbled notes in the margins. It looks like a sequence of numbers…",
       "start_position": 6,
-      "target_position": 6,
-      "target_points": 6
+      "target_position": 0,
+      "target_points": 0
     }
   ]
 }

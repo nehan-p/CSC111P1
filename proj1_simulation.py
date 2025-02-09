@@ -258,4 +258,19 @@ if __name__ == "__main__":
     sim = AdventureGameSimulation('game_data.json', 7, usb_puzzle_demo)
     assert expected_usb_puzzle_log == sim.get_id_log()
 
+    laptop_charger_demo = [
+        "go east",  # 7 → 2
+        "go south",  # 2 → 6
+        "pick up lost student card",  # Remain at 6
+        "go north",  # 6 → 5
+        "go north",  # 5 → 3 (Robarts Library)
+        "enter study room",  # 3 → 8 (Study Room)
+        "pick up laptop charger",  # Remain at 8
+        "exit"  # 8 → 3
+    ]
+
+    expected_laptop_log = [7, 2, 6, 6, 5, 3, 8, 8, 3]
+    sim = AdventureGameSimulation('game_data.json', 7, laptop_charger_demo)
+    assert expected_laptop_log == sim.get_id_log()
+
     # Note: You can add more code below for your own testing purposes

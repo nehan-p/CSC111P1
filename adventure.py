@@ -129,6 +129,15 @@ class AdventureGame:
         """Pick up an item if it's at the current location."""
         current_location = self.get_location()
 
+        if item_name == "laptop charger":
+            print("As you reach for the charger, a librarian stops you.")
+            print("She says, 'Solve this riddle to take the charger:'")
+            print("What has keys but can't open locks?")
+            answer = input("Your answer: a _____").strip().lower()
+            if answer != "piano":
+                print("Incorrect. The charger remains on the table.")
+                return  # Exit without picking up
+
         if item_name in current_location.items:
             # Proceed to pick up the item (removed riddle check)
             self.inventory.append(item_name)
@@ -143,9 +152,6 @@ class AdventureGame:
             # Update location descriptions
             current_location.brief_description = current_location.brief_description.replace(f" {item_name}", "")
             current_location.long_description = current_location.long_description.replace(f" {item_name}", "")
-
-            if item_name == "old notebook":
-                print("You can now read the old notebook by typing 'read old notebook'.")
 
         else:
             print("There's no such item here.")
@@ -260,6 +266,8 @@ if __name__ == "__main__":
             print("-", action)
         for item in location.items:
             print(f"- pick up {item}")
+        if "old notebook" in game.inventory:
+            print("- read old notebook")
 
         # Validate choice
         choice = input("\nEnter action: ").lower().strip()
@@ -267,7 +275,7 @@ if __name__ == "__main__":
                and choice not in menu
                and not choice.startswith("pick up ")
                and not choice.startswith("drop ")
-               and not choice.startswith("read ")):
+               and not (choice == "read old notebook" and "old notebook" in game.inventory)):
             print("That was an invalid option; try again.")
             choice = input("\nEnter action: ").lower().strip()
 
@@ -275,7 +283,9 @@ if __name__ == "__main__":
         print("You decided to:", choice)
 
         # Deduct a move for valid actions
-        if choice not in ["look", "inventory", "score", "undo", "log", "quit"]:
+        if (choice not in menu
+                and not choice.startswith("pick up ")
+                and not choice.startswith("read ")):
             game.deduct_move()
 
         if choice in menu:
