@@ -24,25 +24,31 @@
       "items": []
     },
     {
-      "id": 3,
-      "name": "Robarts Library",
-      "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the east and a locked study room is nearby.",
+      "id" : 3,
+      "name" : "Robarts Library",
+       "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the east and a locked study room is to the west.",
       "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the east and a locked study room is nearby with a keypad entry.",
-      "available_commands": {
-        "go east": 2,
-        "enter study room": 8
+      "available_commands" : {
+        "go east" : 2,
+        "go west" : 8
       },
-      "items": []
+      "items" : [],
+      "examinables" : {
+        "coffee cup" : "A cold half-empty latte from Starbucks. The order sticker reads: 'Venti Oat Milk Latte, 3 pumps SFV'",
+        "bookshelf" : "Rows of dense computer science textbooks. One title catches your eye: 'Advanced Lock Mechanisms Vol. III'",
+        "door frame" : "Looking closely at the door frame, you find four small numbers scratched into the paint: 7291.",
+        "table" : "The table's surface is covered in pencil marks and carved initials. Someone wrote 'CS > EE' in the corner"
+      }
     },
     {
       "id": 4,
       "name": "Myhal Basement",
-      "brief_description": "You are in the basement of the Myhal Centre for Engineering Innovation. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is nearby.",
+      "brief_description": "You are in the basement of the Myhal Centre for Engineering Innovation. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is to the south.",
       "long_description": "You find yourself in the basement of the Myhal Centre for Engineering Innovation and Entrepreneurship, a more modern study space. The computer labs are nearly full, and the hum of laptop fans fills the air. The wooden finish and sleek furniture give the space a high-tech feel. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is nearby.",
       "available_commands": {
       "go east": 5,
       "go west": 2,
-      "enter computer lab": 9
+      "go south": 9
     },
       "items": []
     },
@@ -60,7 +66,7 @@
     {
       "id": 6,
       "name": "Wallberg Memorial Building",
-      "brief_description": "You are in the Wallberg Memorial Building, where your engineering lectures take place. Front Campus is to the north, and St. George Street is to the west. A lost student card and an old notebook are lying on a desk.",
+      "brief_description": "You are in the Wallberg Memorial Building, where your computer science lectures take place. Front Campus is to the north, and St. George Street is to the west. A lost student card and an old notebook are lying on a desk.",
       "long_description": "You are in the Wallberg Memorial Building, a familiar place for engineering and computer science students. A lecture is currently in progress in one of the large halls. The professor is animatedly explaining a complex formula on the board, while a few students whisper to each other, trying to decipher their notes. Others have resigned themselves to zoning out, their eyes drifting toward the clock, counting down the minutes until the lecture ends. On a nearby desk, you notice a student card belonging to someone named Joey. Beside it, an old, worn-out notebook filled with cryptic equations and lecture notes lies abandoned.",
       "available_commands": {
         "go north": 5,

@@ -60,7 +60,7 @@ class AdventureGameSimulation:
         # Hint: Call self.generate_events with the appropriate arguments
         self.generate_events(commands, initial_location)
 
-    def generate_events(self, commands: list[str], initial_locaiton) -> None:
+    def generate_events(self, commands: list[str], initial_location) -> None:
         """Generate all events in this simulation, handling both movement and non-movement commands."""
         current_location = self._game.get_location()
         visited_locations = set()
@@ -142,48 +142,43 @@ if __name__ == "__main__":
 
     # TODO: Modify the code below to provide a walkthrough of commands needed to win and lose the game
     win_walkthrough = [
-        "go east",  # 7 -> 2
-        "go west",  # 2 -> 1
-        "pick up uoft mug",  # Remain in 1
-        "go east",  # 1 -> 2
-        "go south",  # 2 -> 6
-        "go north",  # 6 -> 5
-        "go north",  # 5 -> 3
-        "enter study room",  # 3 -> 8
-        "pick up laptop charger",  # Remain in 8
-        "exit",  # 8 -> 3
-        "go east",  # 3 -> 2
-        "go east",  # 2 -> 4
-        "enter computer lab",  # 4 -> 9
-        "pick up usb drive",  # Remain in 9
-        "exit",  # 9 -> 4
-        "go west",  # 4 -> 2
-        "go north"  # 2 -> 7 (win condition)
+        "go east",  # 7 → 2 (Dorm → St. George St)
+        "go west",  # 2 → 1 (Bahen Center)
+        "pick up uoft mug",
+        "go east",  # 1 → 2
+        "go south",  # 2 → 6 (Wallberg)
+        "pick up lost student card",
+        "pick up old notebook",
+        "read old notebook",  # Reveal lab code 3842
+        "go north",  # 6 → 5 (Front Campus)
+        "go north",  # 5 → 3 (Robarts Library)
+        "examine door frame",  # Get study room code 7291
+        "go west",  # 3 → 8 (Study Room) WITH CODE
+        7291,
+        "pick up laptop charger",
+        "piano",
+        "exit",  # 8 → 3
+        "go east",  # 3 → 2
+        "go east",  # 2 → 4 (Myhal Basement)
+        "go south",  # 4 → 9 (Computer Lab)
+        3842,
+        "pick up usb drive",
+        "exit",  # 9 → 4
+        "go west",  # 4 → 2
+        "go north"  # 2 → 7 (Dorm) - WIN!
     ]
 
-    expected_log = [7, 2, 1, 1, 2, 6, 5, 3, 8, 8, 3, 2, 4, 9, 9, 4, 2, 7]
-    # Uncomment the line below to test your walkthrough
+    expected_win_log = [7, 2, 1, 1, 2, 6, 6, 6, 6, 5, 3, 3, 8, 8, 8, 8, 3, 2, 4, 9, 9, 9, 4, 2, 7]
     sim = AdventureGameSimulation('game_data.json', 7, win_walkthrough)
-    assert expected_log == sim.get_id_log()
+    actual_win_log = sim.get_id_log()
+    assert expected_win_log == sim.get_id_log()
 
     # Create a list of all the commands needed to walk through your game to reach a 'game over' state
     # Use a cycle that goes from dorm to St. George St and back:
-    lose_demo = ["go east", "go north"] * 22
-    # Explanation:
-    # - The simulation starts at location 7.
-    # - "go east" from 7 goes to 2.
-    # - "go north" from 2 goes back to 7.
-    #
-    # The simulation logs the initial location (7) and then each command’s resulting location.
-    # That produces the following cycle:
-    #    Initial: 7
-    #    After "go east": 2
-    #    After "go north": 7
-    # and so on.
-
-    expected_lose_log = [7] + [2, 7] * 22
+    lose_walkthrough = ["go east", "go north"] * 23  # 46 moves
+    expected_lose_log = [7] + [2, 7] * 23  # Total 47 locations (46 moves)
     # Uncomment the line below to test your demo
-    sim = AdventureGameSimulation('game_data.json', 7, lose_demo)
+    sim = AdventureGameSimulation('game_data.json', 7, lose_walkthrough)
     assert expected_lose_log == sim.get_id_log()
 
     # TODO: Add code below to provide walkthroughs that show off certain features of the game
@@ -204,73 +199,66 @@ if __name__ == "__main__":
 
     # Inventory demonstration
     inventory_demo = [
-        "go east",  # 7 -> 2
-        "go south",  # 2 -> 6
-        "pick up lost student card",  # remain at 6
-        "inventory",  # remain at 6
-        "pick up old notebook",  # remain at 6
-        "inventory"  # remain at 6
+        "go east",  # 7 → 2
+        "go south",  # 2 → 6
+        "inventory",  # Empty
+        "pick up lost student card",
+        "inventory",  # Show card
+        "pick up old notebook",
+        "inventory"  # Show both
     ]
-    # The simulation logs an initial event (7) and then one event per command:
-    expected_inventory_log = [7, 2, 6, 6, 6, 6, 6]
+    expected_inventory_log = [7, 2, 6, 6, 6, 6, 6, 6]
     sim = AdventureGameSimulation('game_data.json', 7, inventory_demo)
+    actual_inventory_log = sim.get_id_log()
     assert expected_inventory_log == sim.get_id_log()
 
     # Score demonstration
     score_demo = [
-        "go east",  # 7 -> 2
-        "go south",  # 2 -> 6
-        "pick up lost student card",  # remain at 6
-        "score",  # remain at 6
-        "pick up old notebook",  # remain at 6
-        "score"  # remain at 6
+        "go east",  # 7 → 2
+        "go west",  # 2 → 1 (Bahen)
+        "pick up engineering calculator",
+        "score",  # 0 (not placed)
+        "go east",  # 1 → 2
+        "go east",  # 2 → 4 (Myhal)
+        "drop engineering calculator",  # +5 points
+        "score"  # 5
     ]
-    expected_score_log = [7, 2, 6, 6, 6, 6, 6]
+    expected_score_log = [7, 2, 1, 1, 1, 2, 4, 4, 4]
     sim = AdventureGameSimulation('game_data.json', 7, score_demo)
+    actual_score_log = sim.get_id_log()
     assert expected_score_log == sim.get_id_log()
 
     # Puzzle demonstration (USB access)
     usb_puzzle_demo = [
-        "go east",  # 7 -> 2
-        "go south",  # 2 -> 6
-        "pick up old notebook",  # remain at 6
-        "read old notebook",  # remain at 6
-        "go north",  # 6 -> 5 (Front Campus)
-        "go north",  # 5 -> 3 (Robarts Library)
-        "go east",  # 3 -> 2 (St. George St)
-        "go east",  # 2 -> 4 (Myhal Basement)
-        "enter computer lab",  # 4 -> 9 (Computer Lab)
-        "pick up usb drive"  # remain at 9
+        "go east",  # 7 → 2
+        "go south",  # 2 → 6
+        "pick up old notebook",
+        "read old notebook",  # Get code
+        "go north",  # 6 → 5
+        "go north",  # 5 → 3
+        "go east",  # 3 → 2
+        "go east",  # 2 → 4
+        "go south",  # 4 → 9 (With code)
+        "pick up usb drive"
     ]
-    # The expected log:
-    # Initial event: 7
-    # "go east": 2
-    # "go south": 6
-    # "pick up old notebook": 6
-    # "read old notebook": 6
-    # "go north": 5
-    # "go north": 3
-    # "go east": 2
-    # "go east": 4
-    # "enter computer lab": 9
-    # "pick up usb drive": 9
-    expected_usb_puzzle_log = [7, 2, 6, 6, 6, 5, 3, 2, 4, 9, 9]
+    expected_usb_log = [7, 2, 6, 6, 6, 5, 3, 2, 4, 9, 9]
     sim = AdventureGameSimulation('game_data.json', 7, usb_puzzle_demo)
-    assert expected_usb_puzzle_log == sim.get_id_log()
+    actual_usb_log = sim.get_id_log()
+    assert expected_usb_log == sim.get_id_log()
 
     laptop_charger_demo = [
         "go east",  # 7 → 2
         "go south",  # 2 → 6
-        "pick up lost student card",  # Remain at 6
+        "pick up lost student card",
         "go north",  # 6 → 5
-        "go north",  # 5 → 3 (Robarts Library)
-        "enter study room",  # 3 → 8 (Study Room)
-        "pick up laptop charger",  # Remain at 8
-        "exit"  # 8 → 3
+        "go north",  # 5 → 3
+        "go west",  # Try study room (fail)
+        "examine door frame",  # Get code
+        "go west"  # Success with code
     ]
-
-    expected_laptop_log = [7, 2, 6, 6, 5, 3, 8, 8, 3]
+    expected_laptop_log = [7, 2, 6, 6, 5, 3, 8, 8, 8]
     sim = AdventureGameSimulation('game_data.json', 7, laptop_charger_demo)
+    actual_laptop_log = sim.get_id_log()
     assert expected_laptop_log == sim.get_id_log()
 
     # Note: You can add more code below for your own testing purposes

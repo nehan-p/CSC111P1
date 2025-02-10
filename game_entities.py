@@ -19,6 +19,7 @@ please consult our Course Syllabus.
 This file is Copyright (c) 2025 CSC111 Teaching Team
 """
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -33,31 +34,20 @@ class Location:
     - available_commands: A dictionary mapping commands (e.g., "go east") to the corresponding location ID.
     - items: A list of item names present at this location.
     - visited: A boolean indicating whether the player has visited this location before.
+    - examinables: A dictionary of objects that can be examined with their descriptions.
 
     Representation Invariants:
     - id_num > 0
     """
 
-    # This is just a suggested starter class for Location.
-    # You may change/add parameters and the data available for each Location object as you see fit.
-    #
-    # The only thing you must NOT change is the name of this class: Location.
-    # All locations in your game MUST be represented as an instance of this class.
-
-    def __init__(self, location_id, brief_description, long_description, available_commands, items,
-                 visited=False) -> None:
-        """Initialize a new location.
-
-        # TODO Add more details here about the initialization if needed
-        """
-
+    def __init__(self, location_id: int, brief_description: str, long_description: str, available_commands: dict[str, int], items: list[str], visited: bool = False, examinables: Optional[dict[str, str]] = None) -> None:
         self.id_num = location_id
         self.brief_description = brief_description
         self.long_description = long_description
         self.available_commands = available_commands
         self.items = items
         self.visited = visited
-
+        self.examinables = examinables if examinables is not None else {}
 
 @dataclass
 class Item:
@@ -85,6 +75,7 @@ class Item:
     # All item objects in your game MUST be represented as an instance of this class.
 
     name: str
+    description: str
     start_position: int
     target_position: int
     target_points: int
