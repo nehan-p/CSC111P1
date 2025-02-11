@@ -75,9 +75,9 @@ class AdventureGame:
         self.ongoing = True  # whether the game is ongoing
         self.inventory = []  # Initialize an empty inventory
         self.score = 0 # starting score of 0
-        self.remaining_moves = 45
+        self.remaining_moves = 40
         self.known_codes = set()  # Track discovered codes
-        self.study_room_puzzle_activated = False  # Add this line
+        self.study_room_puzzle_activated = False
 
 
     @staticmethod
@@ -115,8 +115,6 @@ class AdventureGame:
         If no ID is provided, return the Location object associated with the current location.
         """
 
-        # TODO: Complete this method as specified
-        # YOUR CODE BELOW
         # If loc_id is None, use the current location ID
         if loc_id is None:
             loc_id = self.current_location_id
@@ -132,7 +130,7 @@ class AdventureGame:
         """Pick up an item if it's at the current location."""
         current_location = self.get_location()
 
-        if item_name == "laptop charger":
+        if item_name == "laptop charger": #laptop charger riddle
             print("As you reach for the charger, a librarian stops you.")
             print("She says, 'Solve this riddle to take the charger:'")
             print("What has keys but can't open locks?")
@@ -142,7 +140,6 @@ class AdventureGame:
                 return  # Exit without picking up
 
         if item_name in current_location.items:
-            # Proceed to pick up the item (removed riddle check)
             self.inventory.append(item_name)
             current_location.items.remove(item_name)
 
@@ -202,7 +199,9 @@ class AdventureGame:
         if (self.current_location_id == 7 and "usb drive" in self.inventory and "uoft mug" in self.inventory and "laptop charger" in self.inventory):
             print("Your laptop is charging, your game is backed up, and your lucky mug is right where it belongs.")
             print("With everything set, you're ready to finish your project and submit it on time. Well done!")
+            print(f"Your final score was: {self.score}")
             self.ongoing = False  # End the game
+
 
 
 if __name__ == "__main__":
@@ -231,17 +230,6 @@ if __name__ == "__main__":
 
         location = game.get_location()
 
-        # TODO: Add new Event to game log to represent current game location
-        #  Note that the <choice> variable should be the command which led to this event
-        # YOUR CODE HERE
-        # Add a new Event for the current location
-        # event = Event(
-        #     id_num=location.id_num,
-        #     description=location.long_description if not location.visited else location.brief_description,
-        #     next_command=choice if choice not in ["look", "inventory", "score", "undo", "log"] else None,
-        #     prev=game_log.last
-        # )
-        # game_log.add_event(event)
         if choice not in ["look", "inventory", "score", "undo", "log"]:
             event = Event(
                 id_num=location.id_num,
@@ -252,14 +240,11 @@ if __name__ == "__main__":
             game_log.add_event(event, command=choice)
           # Mark the location as visited
 
-        # TODO: Depending on whether or not it's been visited before,
-        #  print either full description (first time visit) or brief description (every subsequent visit) of location
-        # YOUR CODE HERE
         if not location.visited or in_look:
             print(location.long_description)
             location.visited = True
             in_look = False
-        elif not in_look:
+        elif not in_look or location.visited:
             print(location.brief_description)
 
         # Display possible actions at this location
@@ -291,11 +276,11 @@ if __name__ == "__main__":
         # Deduct a move for valid actions
         if (choice not in menu
                 and not choice.startswith("pick up ")
+                and not choice.startswith("drop ")
                 and not choice.startswith("read ")):
             game.deduct_move()
 
         if choice in menu:
-            # TODO: Handle each menu command as appropriate
             # Note: For the "undo" command, remember to manipulate the game_log event list to keep it up-to-date
             # Handle study room access check
             if choice == "log":
@@ -310,7 +295,6 @@ if __name__ == "__main__":
             elif choice == "look":
                 print("You take a moment to look around...")
                 in_look = True
-
 
             elif choice == "score":
                 # Display the player's current score
@@ -364,17 +348,12 @@ if __name__ == "__main__":
 
         elif choice.startswith("read "):
             item_name = choice[len("read "):]
-            if item_name in game.inventory:
-                if item_name == "old notebook":
-                    print("You flip through the notebook...")
-                    print("Pages of differential equations and lecture notes...")
-                    print("On the top-left of page 42: '3842 - remember to submit assignment!'")
-                    print("Hmm, those four digits look important. Better make note of them!")
-                    has_lab_code = True
-                else:
-                    item = game.get_item_by_name(item_name)
-                    if item:
-                        print(f"You examine {item_name}: {item.description}")
+            if item_name == "old notebook" and item_name in game.inventory:
+                print("You flip through the notebook...")
+                print("Pages of differential equations and lecture notes...")
+                print("On the top-left of page 42: '3842 - remember to submit assignment!'")
+                print("Hmm, those four digits look important. Better make note of them!")
+                has_lab_code = True
             else:
                 print(f"You don't have {item_name} to read.")
 
@@ -389,7 +368,7 @@ if __name__ == "__main__":
                 if current_loc.id_num == 3 and object_name == "door frame":
                     game.known_codes.add("7291")
             else:
-                print("\nThere's nothing notable about that.")
+                print("\nLooks like there's nothing to examine!")
 
         elif choice == "go south" and game.get_location().id_num == 4:
             print("The lab door has a keypad. A sign says: 'Enter 4-digit code:'")
@@ -397,6 +376,7 @@ if __name__ == "__main__":
                 print("You need an access code! Maybe theres a code written on a notebook somewhere...?")
                 continue
             else:
+                print("Hmmmm, where have I seen a 4 digit code before?")
                 attempt = input("Enter 4-digit code: ").strip()
                 if attempt == "3842":
                     game.current_location_id = 9  # Computer Lab's ID
@@ -406,49 +386,42 @@ if __name__ == "__main__":
                     game.deduct_move()
                     continue
 
+        elif choice == "go west" and game.get_location().id_num == 3:
+            if "lost student card" not in game.inventory:
+                print("\nThe study room door has a card reader blinking red. A sign reads:")
+                print("'ACCESS LIMITED TO UOFT STUDENTS - TAP CARD TO ENTER'")
+                game.study_room_puzzle_activated = True  # Activate puzzle hints
+                game.deduct_move()
+                continue  # Skip movement
+
+            else:
+                print("\nYou tap the student card. The reader flashes green!")
+                if "7291" not in game.known_codes:
+                    print("A hidden keypad slides out from the wall with a prompt:")
+                    print("'ENTER 4-DIGIT MAINTENANCE CODE'")
+                    print("You don't know the code! Maybe there's a clue nearby...")
+                    game.study_room_puzzle_activated = True  # Activate puzzle hints
+                    game.deduct_move()
+                    continue  # Skip movement
+
+                else:
+                    code_attempt = input("Enter 4-digit code: ").strip()
+                    if code_attempt == "7291":
+                        print("\nThe door mechanism clicks open! You slip inside.")
+                        game.current_location_id = 8
+                    else:
+                        print("\nIncorrect code! The keypad flashes red and retracts.")
+                        game.deduct_move()
+                        continue  # Skip movement
+
+
         else:
             # Handle non-menu actions
             if choice in location.available_commands:
                 target_id = location.available_commands[choice]
-
-                # Special case: Trying to enter study room from Robarts
-
-                if location.id_num == 3 and target_id == 8:
-                    if "lost student card" not in game.inventory:
-                        print("\nThe study room door has a card reader blinking red. A sign reads:")
-                        print("'ACCESS LIMITED TO UOFT STUDENTS - TAP CARD TO ENTER'")
-                        game.study_room_puzzle_activated = True  # Activate puzzle hints
-                        game.deduct_move()
-                        continue  # Skip movement
-
-                    else:
-                        print("\nYou tap the student card. The reader flashes green!")
-                        if "7291" not in game.known_codes:
-                            print("A hidden keypad slides out from the wall with a prompt:")
-                            print("'ENTER 4-DIGIT MAINTENANCE CODE'")
-                            print("You don't know the code! Maybe there's a clue nearby...")
-                            game.study_room_puzzle_activated = True  # Activate puzzle hints
-                            game.deduct_move()
-                            continue  # Skip movement
-
-                        else:
-                            code_attempt = input("Enter 4-digit code: ").strip()
-                            if code_attempt == "7291":
-                                print("\nThe door mechanism clicks open! You slip inside.")
-                                game.current_location_id = 8
-                            else:
-                                print("\nIncorrect code! The keypad flashes red and retracts.")
-                                game.deduct_move()
-                                continue  # Skip movement
-
-                # Normal movement for other cases
                 game.current_location_id = target_id
                 game.check_win_condition()
-
 
             result = location.available_commands[choice]
             game.current_location_id = result
             game.check_win_condition()
-
-            # TODO: Add in code to deal with actions which do not change the location (e.g. taking or using an item)
-            # TODO: Add in code to deal with special locations (e.g. puzzles) as needed for your game

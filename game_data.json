@@ -27,7 +27,7 @@
       "id" : 3,
       "name" : "Robarts Library",
        "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the east and a locked study room is to the west.",
-      "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the east and a locked study room is nearby with a keypad entry.",
+      "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the east and a locked study room is to the west with a keypad entry.",
       "available_commands" : {
         "go east" : 2,
         "go west" : 8
@@ -145,8 +145,8 @@
       "name": "old notebook",
       "description": "A worn-out notebook filled with cryptic equations and lecture notes. Someone must have abandoned it. You should leave it in the lecture hall in case they come back for it. As you glance at the pages, you notice some hastily scribbled notes in the margins. It looks like a sequence of numbers…",
       "start_position": 6,
-      "target_position": 0,
-      "target_points": 0
+      "target_position": 6,
+      "target_points": 2
     }
   ]
 }
