@@ -13,23 +13,22 @@
     {
       "id": 2,
       "name": "St. George St",
-      "brief_description": "You are standing on St. George Street, right outside of Bahen. To the west is the entrance to Bahen, to the east is the Myhal Centre, to the south is Wallberg Memorial, and to the north, a quiet walkway leads toward the dorms.",
-      "long_description": "You are standing on St. George Street, right outside of the Bahen Center. The cool breeze of downtown Toronto brushes against you. The street is bustling with students going in and out of various buildings. The entrance to Bahen is to the west, while the Myhal Centre is just ahead to the east. To the south, you can see the Wallberg Memorial Building, and further north, a walkway leads toward the dorms.",
+      "brief_description": "You are standing on St. George Street, right outside of Bahen. To the west is the entrance to Bahen, to the east is the Myhal Centre, to the south is Wallberg Memorial, and to the north is Robarts Library",
+      "long_description": "You are standing on St. George Street, right outside of the Bahen Center. The cool breeze of downtown Toronto brushes against you. The street is bustling with students going in and out of various buildings. The entrance to Bahen is to the west, while the Myhal Centre is just ahead to the east. To the north, Robarts Library stands tall and proud.",
       "available_commands": {
         "go west": 1,
         "go east": 4,
-        "go south": 6,
-        "go north": 7
+        "go north": 3
       },
       "items": []
     },
     {
       "id" : 3,
       "name" : "Robarts Library",
-       "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the east and a locked study room is to the west.",
-      "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the east and a locked study room is to the west with a keypad entry.",
+       "brief_description": "You step inside Robarts Library, a brutalist masterpiece of a building. The exit to St. George Street is on the south and a locked study room is to the west.",
+      "long_description": "You step inside Robarts Library, a brutalist masterpiece of a building, known for its towering concrete walls and endless rows of bookshelves. The library is silent except for the furious typing of students working away. The exit to St. George Street is on the south and a locked study room is to the west with a keypad entry.",
       "available_commands" : {
-        "go east" : 2,
+        "go south" : 2,
         "go west" : 8
       },
       "items" : [],
@@ -44,7 +43,7 @@
       "id": 4,
       "name": "Myhal Basement",
       "brief_description": "You are in the basement of the Myhal Centre for Engineering Innovation. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is to the south.",
-      "long_description": "You find yourself in the basement of the Myhal Centre for Engineering Innovation and Entrepreneurship, a more modern study space. The computer labs are nearly full, and the hum of laptop fans fills the air. The wooden finish and sleek furniture give the space a high-tech feel. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is nearby.",
+      "long_description": "You find yourself in the basement of the Myhal Centre for Engineering Innovation and Entrepreneurship, a more modern study space. The computer labs are nearly full, and the hum of laptop fans fills the air. The wooden finish and sleek furniture give the space a high-tech feel. The exit to St. George Street is to the west, and Front Campus is to the east. The computer lab is down south.",
       "available_commands": {
       "go east": 5,
       "go west": 2,
@@ -55,32 +54,32 @@
     {
       "id": 5,
       "name": "Front Campus",
-      "brief_description": "You are at Front Campus, surrounded by historic buildings and a massive open lawn. The dorms are to the north, and Wallberg Memorial Building is to the south.",
-      "long_description": "You are at Front Campus, a scenic open lawn surrounded by historic UofT buildings. Students are lying on the grass, enjoying the sun, while a group of tourists takes photos of University College. The atmosphere is peaceful, with only the occasional laughter or distant chatter. You spot a UofT mug on a nearby bench. Someone must have left it behind. The dorms are just beyond the trees to the north, while the Wallberg Memorial Building is further down to the south.",
+      "brief_description": "You are at Front Campus, surrounded by historic buildings and a massive open lawn. The dorms are to the north, Myhal is to the west, and Wallberg Memorial Building is to the south.",
+      "long_description": "You are at Front Campus, a scenic open lawn surrounded by historic UofT buildings. Students are lying on the grass, enjoying the sun, while a group of tourists takes photos of University College. The atmosphere is peaceful, with only the occasional laughter or distant chatter. The dorms are just beyond the trees to the north, Myhal is to the east, and the Wallberg Memorial Building is further down to the south.",
       "available_commands": {
-        "go north": 3,
-        "go south": 6
+        "go north": 7,
+        "go south": 6,
+        "go west": 4
       },
       "items": []
     },
     {
       "id": 6,
       "name": "Wallberg Memorial Building",
-      "brief_description": "You are in the Wallberg Memorial Building, where your computer science lectures take place. Front Campus is to the north, and St. George Street is to the west. A lost student card and an old notebook are lying on a desk.",
-      "long_description": "You are in the Wallberg Memorial Building, a familiar place for engineering and computer science students. A lecture is currently in progress in one of the large halls. The professor is animatedly explaining a complex formula on the board, while a few students whisper to each other, trying to decipher their notes. Others have resigned themselves to zoning out, their eyes drifting toward the clock, counting down the minutes until the lecture ends. On a nearby desk, you notice a student card belonging to someone named Joey. Beside it, an old, worn-out notebook filled with cryptic equations and lecture notes lies abandoned.",
+      "brief_description": "You are in the Wallberg Memorial Building, where your computer science lectures take place. Front Campus is to the north. A lost student card and an old notebook are lying on a desk.",
+      "long_description": "You are in the Wallberg Memorial Building, a familiar place for engineering and computer science students. A lecture is currently in progress in one of the large halls. The professor is animatedly explaining a complex formula on the board, while a few students whisper to each other, trying to decipher their notes. Others have resigned themselves to zoning out, their eyes drifting toward the clock, counting down the minutes until the lecture ends. Front campus is to the North. On a nearby desk, you notice a student card belonging to someone named Paul. Beside it, an old, worn-out notebook filled with cryptic equations and lecture notes lies abandoned.",
       "available_commands": {
-        "go north": 5,
-        "go west": 2
+        "go north": 5
       },
       "items": ["lost student card", "old notebook"]
     },
     {
       "id": 7,
       "name": "Your Dorm",
-      "brief_description": "You are in your dorm room, your own little corner of campus. There's an exist to the east that leads to St. George Street.",
-      "long_description": "You are in your dorm room, a small but cozy space cluttered with textbooks, empty coffee cups, and a few too many unfinished assignments. Your desk is a chaotic mix of open notebooks and tangled charger cables. The bed is unmade, and your laundry situation is starting to get out of control. Despite the mess, it feels like home. There's an exist to the east that leads to St. George Street",
+      "brief_description": "You are in your dorm room, your own little corner of campus. There's an exist to the south that leads to St. George Street.",
+      "long_description": "You are in your dorm room, a small but cozy space cluttered with textbooks, empty coffee cups, and a few too many unfinished assignments. Your desk is a chaotic mix of open notebooks and tangled charger cables. The bed is unmade, and your laundry situation is starting to get out of control. Despite the mess, it feels like home. There's an exist to the south that leads to St. George Street",
       "available_commands": {
-        "go east": 2
+        "go south": 5
       },
       "items": []
     },
@@ -115,7 +114,7 @@
     },
     {
       "name": "lost student card",
-      "description": "A student card belonging to someone named Joey. It should probably be returned to Lost & Found in Robarts Library.",
+      "description": "A student card belonging to someone named Paul. It should probably be returned to Lost & Found in Robarts Library.",
       "start_position": 6,
       "target_position": 3,
       "target_points": 7

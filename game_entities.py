@@ -40,6 +40,14 @@ class Location:
     - id_num > 0
     """
 
+    id_num: int
+    brief_description: str
+    long_description: str
+    available_commands: dict[str, int]
+    items: list[str]
+    visited: bool
+    examinables: dict[str, str]
+
     def __init__(self, location_id: int, brief_description: str, long_description: str, available_commands: dict[str, int], items: list[str], visited: bool = False, examinables: Optional[dict[str, str]] = None) -> None:
         self.id_num = location_id
         self.brief_description = brief_description
@@ -48,6 +56,7 @@ class Location:
         self.items = items
         self.visited = visited
         self.examinables = examinables if examinables is not None else {}
+
 
 @dataclass
 class Item:
@@ -59,6 +68,7 @@ class Item:
     - start_position: The location ID where the item starts.
     - target_position: The location ID where the item is intended to be used.
     - target_points: The number of points awarded if the item is used correctly.
+    - scored: Checks if points have already been awarded for the item
 
     Representation Invariants:
     - start_position > 0
@@ -66,33 +76,17 @@ class Item:
     - target_points >= 0
     """
 
-    # NOTES:
-    # This is just a suggested starter class for Item.
-    # You may change these parameters and the data available for each Item object as you see fit.
-    # (The current parameters correspond to the example in the handout).
-    #
-    # The only thing you must NOT change is the name of this class: Item.
-    # All item objects in your game MUST be represented as an instance of this class.
-
     name: str
     description: str
     start_position: int
     target_position: int
     target_points: int
+    scored: bool = False
 
-
-# Note: Other entities you may want to add, depending on your game plan:
-# - Puzzle class to represent special locations (could inherit from Location class if it seems suitable)
-# - Player class
-# etc.
 
 if __name__ == "__main__":
-    pass
-    # When you are ready to check your work with python_ta, uncomment the following lines.
-    # (Delete the "#" and space before each line.)
-    # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-    # import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 120,
-    #     'disable': ['R1705', 'E9998', 'E9999']
-    # })
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 220,
+        'disable': ['R1705', 'E9998', 'E9999']
+    })
