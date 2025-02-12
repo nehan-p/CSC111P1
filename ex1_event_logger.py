@@ -94,14 +94,15 @@ class EventList:
         The given command is the command which was used to reach this new event, or None if this is the first
         event in the game.
         """
-        # Hint: You should update the previous node's <next_command> as needed
+
         if self.is_empty():
             self.first = event
             self.last = event
-            event.next = None
+            event.prev = None
 
         else:
             self.last.next = event
+            event.prev = self.last
             self.last = event
             event.next = None
             self.last.prev.next_command = command
@@ -109,8 +110,6 @@ class EventList:
     def remove_last_event(self) -> None:
         """Remove the last event from this event list.
         If the list is empty, do nothing."""
-
-        # Hint: The <next_command> and <next> attributes for the new last event should be updated as needed
 
         if self.is_empty():
             return
@@ -130,8 +129,6 @@ class EventList:
             list_of_ids.append(curr.id_num)
             curr = curr.next
         return list_of_ids
-
-    # Note: You may add other methods to this class as needed but DO NOT CHANGE THE SPECIFICATION OF ANY OF THE ABOVE
 
 
 if __name__ == "__main__":

@@ -69,8 +69,6 @@ class SimpleAdventureGame:
         - game_data_file is the filename of a valid game data JSON file
         """
 
-        # Note: We have completed this method for you. Do NOT modify it here, for ex1.
-
         self._locations = self._load_game_data(game_data_file)
         self.current_location_id = initial_location_id  # game begins at this location
 
@@ -78,8 +76,6 @@ class SimpleAdventureGame:
     def _load_game_data(filename: str) -> dict[int, Location]:
         """Load locations and items from a JSON file with the given filename and
         return a dictionary of locations mapping each game location's ID to a Location object."""
-
-        # Note: We have completed this method for you. Do NOT modify it here, for ex1.
 
         with open(filename, 'r') as f:
             data = json.load(f)  # This loads all the data from the JSON file
@@ -108,8 +104,8 @@ class AdventureGameSimulation:
     # Private Instance Attributes:
     #   - _game: The AdventureGame instance that this simulation uses.
     #   - _events: A collection of the events to process during the simulation.
-    _game: SimpleAdventureGame
-    _events: EventList
+    # _game: SimpleAdventureGame
+    # _events: EventList
 
     def __init__(self, game_data_file: str, initial_location_id: int, commands: list[str]) -> None:
         """Initialize a new game simulation based on the given game data, that runs through the given commands.
@@ -122,9 +118,8 @@ class AdventureGameSimulation:
         self._game = SimpleAdventureGame(game_data_file, initial_location_id)
 
         initial_location = self._game.get_location()
-        # Hint: self._game.get_location() gives you back the current location
-
-        # Hint: Call self.generate_events with the appropriate arguments
+        first_event = Event(initial_location_id, initial_location.description, commands[0], None, None)
+        self._events.add_event(first_event)
         self.generate_events(commands, initial_location)
 
     def generate_events(self, commands: list[str], current_location: Location) -> None:
@@ -135,10 +130,6 @@ class AdventureGameSimulation:
         - all commands in the given list are valid commands at each associated location in the game
         """
 
-        # Hint: current_location.available_commands[command] will return the next location ID
-        # which executing <command> while in <current_location_id> leads to
-        first_event = Event(current_location.id_num, current_location.description, commands[0], None, None)
-        self._events.add_event(first_event)
         for command in commands:
             next_loc_id = current_location.available_commands[command]
             next_loc_desc = self._game.get_location(next_loc_id).description
@@ -171,8 +162,6 @@ class AdventureGameSimulation:
     def run(self) -> None:
         """Run the game simulation and log location descriptions."""
 
-        # Note: We have completed this method for you. Do NOT modify it for ex1.
-
         current_event = self._events.first  # Start from the first event in the list
 
         while current_event:
@@ -185,9 +174,6 @@ class AdventureGameSimulation:
 
 
 if __name__ == "__main__":
-    # When you are ready to check your work with python_ta, uncomment the following lines.
-    # (Delete the "#" and space before each line.)
-    # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
     import python_ta
     python_ta.check_all(config={
         'max-line-length': 120,
